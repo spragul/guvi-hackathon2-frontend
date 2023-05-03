@@ -35,7 +35,7 @@ export function Login() {
       })
       const data = await response.json();
       sessionStorage.setItem('token',data.token)
-        history.push("/dashboard")
+        history.push("/")
         toast("User login successful")
     
     } catch (error) {
