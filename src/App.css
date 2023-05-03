@@ -2,37 +2,278 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+footer {
+
+  padding: 17px;
+  font-size: larger;
+  font-weight: bolder;
+  width: 100%;
+  background: #4d58ee;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
+/* Sidebar start*/
+
+.sid-container {
+  display: flex;
+  /* background-color: aquamarine; */
+}
+
+.container {
+  display: flex;
+
+}
+
+main {
+  width: 100%;
+
+}
+
+.sidebar {
+  background: #4d58ee;
+  color: #fff;
+  height: auto;
+  width: 20%;
+  transition: all 0.5s;
+}
+
+.top_section {
+  display: flex;
+  align-items: center;
+  padding: 20px 15px;
+}
+
+.logo {
+  font-size: 30px;
+}
+
+.bars {
+  display: flex;
+  font-size: 25px;
+  margin-left: 50px;
+}
+
+.link {
+  display: flex;
+  color: #fff;
+  padding: 10px 15px;
+  gap: 15px;
+  transition: all 0.5s;
+}
+
+.link:hover {
+  background: lightskyblue;
+  color: #000;
+  transition: all 0.5s;
+}
+
+.active {
+  background: lightskyblue;
+  color: #000;
+}
+
+.icon,
+.link_text {
+  font-size: 20px;
+}
+
+.text-deactron {
+  text-decoration: none;
+}
+
+.redius {
+  border-radius: 50%;
+}
+.bg-clr{
+  background-color: #d1d3e2;
+  width: 40%;
+  height: 55%;
   }
+  .divider:after,
+  .divider:before {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: #eee;
+  }
+  
+  .back {
+    /* fallback for old browsers */
+    background: #6a11cb;
+  
+    /* Chrome 10-25, Safari 5.1-6 */
+    background: -webkit-linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1));
+  
+    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
+  }
+  .text-areas{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin : 12px;
+  }
+  
+
+.nav-clr {
+  background: #4d58ee;
+  color: #ccc;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+/* 
+Book List*/
+.book-condinar{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: rgb(233, 191, 85);
+  margin: 5px;
+  padding: 5px;
+  gap: 1rem;
+}
+
+.book-card{
+  background-color: rgb(166, 87, 219);
+  border-radius : 10px;
+  width : 350px;
+  height : 450px;
+
+}
+.cart-card{
+  background-color: rgb(169, 245, 235);
+  border-radius : 10px;
+  width : 350px;
+  height : 250px;
+}
+.image{
+width: 220px;
+height: 250px;
+}
+
+.btn-group{
+  gap: 1rem;
+}
+
+.button{
+  border-radius: 10px;
+  background-color: forestgreen;
+  color: #fff;
+
+}
+.button-edit:hover{
+  background-color: rgb(226, 241, 11);
+  color:black;
+}
+.button-view:hover{
+  background-color: indigo;
+}
+.button-delete:hover{
+  background-color: maroon;
+}
+/* Book List end */
+
+/* AddBook start*/
+.add-container{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  text-align: center;
+  /* background-color: aqua; */
+  margin: 5px;
+  padding: 5px;
+}
+
+.box-model{
+  width: 60%;
+}
+
+.box-model ul{
+  position: relative;
+  background-color: #ccc;
+}
+
+.box-model ul li{
+  padding: 10px;
+  width: 100%;
+  background: #fff;
+  box-shadow: 0 5px 25px rgba(0,0,0,.1);
+  transition: transform 0.5%;
+}
+
+.box-model ul li:hover{
+transform: scale(1.1);
+z-index:100;
+background:#25bcff;
+box-shadow: 0 5px 25px rgba(0,0,0,.2);
+
+}
+
+.box-model ul li input{
+  width: 100%;
+  height: 30px;
+
+}
+/* Add Boook end */
+/* |table */
+.table-container{
+  width: 700px;
+  height: 80vh;
+}
+
+.issued-container{
+  align-items: center;
+  gap: 3px;
+  height: 80vh;
+}
+#fullWidth{
+  gap: 3px;
+}
+
+.al-center {
+  background-color: gold;
+  align-items: center;
+}
+
+.libraryl {
+  margin: 10px;
+  padding: 10px;
+  width: 100%;
+  height: 100%;
+}
+
+.al-center h1 {
+  font-size: 50px;
+  color: darkgreen;
+  font-weight: 500;
+}
+
+#library-img{
+  width: 40%;
+  height: 40%;
+}
+
+#book-img {
+  width: 40%;
+  height: 40%;
+}
+
+.book-btn {
+  color: #fff;
+  background-color: blueviolet;
+  border-radius: 20px;
+  font-size:30px;
+  width: 20%;
+}
+
+.book-btn:hover {
+  background-color: chartreuse;
+}
+
+.text-areas{
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  gap : 0.5rem;
+  margin : 12px;
 }
