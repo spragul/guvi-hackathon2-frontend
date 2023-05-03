@@ -8,7 +8,7 @@ const AppProvider = ({ children }) => {
     useEffect(() => {
         const getDetails = async () => {
             try {
-                const response = await fetch("http://localhost:7000", {
+                const response = await fetch("https://guvi-hackathon2-backend-do9i.onrender.com", {
                     method: "GET"
                 });
                 const data = await response.json();
@@ -23,7 +23,7 @@ const AppProvider = ({ children }) => {
     useEffect(() => {
         const getDetails = async () => {
             try {
-                const response = await fetch("http://localhost:7000/cart/", {
+                const response = await fetch("https://guvi-hackathon2-backend-do9i.onrender.com/cart/", {
                     method: "GET"
                 });
                 const data = await response.json();

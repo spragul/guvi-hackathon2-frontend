@@ -19,7 +19,7 @@ export function AddProduct() {
   const { productData, setProductData } = AppState();
   const addNewBook = async ({ newproduct }) => {
     try {
-      const response = await fetch("http://localhost:7000/add/product", {
+      const response = await fetch("https://guvi-hackathon2-backend-do9i.onrender.com/add/product", {
         method: "POST",
         body: JSON.stringify(newproduct),
         headers: {

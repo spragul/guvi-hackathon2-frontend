@@ -25,7 +25,7 @@ function ListTable({ heading, sty }) {
   const history = useHistory();
   const productDelete = async (idx) => {
     try {
-      const response = await fetch(`http://localhost:7000/product/delete/${idx}`, {
+      const response = await fetch(`https://guvi-hackathon2-backend-do9i.onrender.com/product/delete/${idx}`, {
         method: "Delete"
       })
       const data = await response.json();
@@ -86,7 +86,7 @@ export function Isstable({ heading, sty }) {
   const { issuesdata, setIssueddata } = AppState();
   const productDelete = async (idx) => {
     try {
-      const response = await fetch(`http://localhost:7000/cart/delete/${idx}`, {
+      const response = await fetch(`https://guvi-hackathon2-backend-do9i.onrender.com/cart/delete/${idx}`, {
         method: "Delete"
       })
       const data = await response.json();

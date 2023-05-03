@@ -27,7 +27,7 @@ export function Cart() {
   const sign = async ({ newuser }) => {
     console.log(newuser);
     try {
-      const response = await fetch(`http://localhost:7000/cart/create/${productId}`, {
+      const response = await fetch(`https://guvi-hackathon2-backend-do9i.onrender.com/cart/create/${productId}`, {
         method: "POST",
         body: JSON.stringify(newuser),
         headers: {

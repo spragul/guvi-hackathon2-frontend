@@ -26,7 +26,7 @@ export function Login() {
   const history =useHistory()
   const log = async ({ loginuser }) => {
     try {
-      const response = await fetch("http://localhost:7000/user/login", {
+      const response = await fetch("https://guvi-hackathon2-backend-do9i.onrender.com/user/login", {
         method: "POST",
         body: JSON.stringify(loginuser),
         headers: {

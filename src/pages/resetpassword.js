@@ -22,7 +22,7 @@ export function Reset() {
     let {id,token}=useParams();
     const restdata = async ({ newpassword }) => {
         try {
-            const response = await fetch(`http://localhost:7000/user/resetpassword/${id}/${token}`, {
+            const response = await fetch(`https://guvi-hackathon2-backend-do9i.onrender.com/user/resetpassword/${id}/${token}`, {
                 method: "POST",
                 body: JSON.stringify(newpassword),
                 headers: {

@@ -20,7 +20,7 @@ export function ProductDetails() {
                     <button
                         style={{ borderRadius: "10px", backgroundColor: "gold" }}
                         onClick={() => history.push("/")}
-                    >Book List</button>
+                    >Product List</button>
                 </div>
 
             </div>

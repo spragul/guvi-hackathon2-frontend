@@ -17,11 +17,6 @@ import { RentalCart } from './cart/rentalcart';
 import PaymentApp from './cart/payment';
 
 
-
-
-
-
-
 function App() {
   return (
     <div className="App">

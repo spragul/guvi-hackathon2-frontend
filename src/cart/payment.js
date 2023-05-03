@@ -13,7 +13,7 @@ function PaymentApp() {
 	const { index } = useParams();
 	const productDatas = productData[index];
 	async function fetchOrders() {
-		const { data } = await axios.get('http://localhost:7000/payment/list-orders');
+		const { data } = await axios.get('https://guvi-hackathon2-backend-do9i.onrender.com/payment/list-orders');
 		setOrders(data);
 	}
 	useEffect(() => {
@@ -29,13 +29,13 @@ function PaymentApp() {
 		script.onload = async () => {
 			try {
 				setLoading(true);
-				const result = await axios.post('http://localhost:7000/payment/create-order', {
+				const result = await axios.post('https://guvi-hackathon2-backend-do9i.onrender.com/payment/create-order', {
 					amount: orderAmount + '00',
 				});
 				const { amount, id: order_id, currency } = result.data;
 				const {
 					data: { key: razorpayKey },
-				} = await axios.get('http://localhost:7000/payment/get-razorpay-key');
+				} = await axios.get('https://guvi-hackathon2-backend-do9i.onrender.com/payment/get-razorpay-key');
 
 				const options = {
 					key: razorpayKey,
@@ -45,7 +45,7 @@ function PaymentApp() {
 					description: 'example transaction',
 					order_id: order_id,
 					handler: async function (response) {
-						const result = await axios.post('http://localhost:7000/payment/pay-order', {
+						const result = await axios.post('https://guvi-hackathon2-backend-do9i.onrender.com/payment/pay-order', {
 							amount: amount,
 							razorpayPaymentId: response.razorpay_payment_id,
 							razorpayOrderId: response.razorpay_order_id,

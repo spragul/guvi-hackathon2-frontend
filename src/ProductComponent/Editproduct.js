@@ -23,7 +23,7 @@ export function EditProducts() {
     const Editedlibrarybook = async ({ editproduct }) => {
 
         try {
-            const response = await fetch(`http://localhost:7000/product/edit/${id}`, {
+            const response = await fetch(`https://guvi-hackathon2-backend-do9i.onrender.com/product/edit/${id}`, {
                 method: "PUT",
                 body: JSON.stringify(editproduct),
                 headers: {
