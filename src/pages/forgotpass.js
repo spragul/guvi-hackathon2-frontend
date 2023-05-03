@@ -22,7 +22,7 @@ export function Forgot() {
   const history = useHistory();
   const forgotdata = async ({ forgotmail }) => {
     try {
-      const response = await fetch("https://guvi-hackathon2-backend-do9i.onrender.com/forgotpassword", {
+      const response = await fetch("https://guvi-hackathon2-backend-do9i.onrender.com/user/forgotpassword", {
         method: "POST",
         body: JSON.stringify(forgotmail),
         headers: {
