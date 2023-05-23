@@ -4,13 +4,13 @@ import { createContext, useContext, useState } from "react";
 const AppContext = createContext();
 const AppProvider = ({ children }) => {
     const [productData, setProductData] = useState([]);
-    const [issuesdata, setIssueddata] = useState([]);
+    const [issuesdata, setIssueddata] = useState([]); 
+    let token = sessionStorage.getItem('token');
     useEffect(() => {
         const getDetails = async () => {
             try {
-                const response = await fetch("https://guvi-hackathon2-backend-do9i.onrender.com", {
-                    method: "GET"
-                });
+                const headers = { 'Authorization': `Bearer ${token}` };
+                const response = await fetch("https://guvi-hackathon2-backend-do9i.onrender.com", { headers });
                 const data = await response.json();
                 const setdata =data.product
                 setProductData(setdata)

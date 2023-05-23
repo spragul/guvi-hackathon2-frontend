@@ -17,6 +17,7 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
 
+
 function Sidebar({ children }) {
 
     const menuItem = [
@@ -74,6 +75,7 @@ export default Sidebar;
 
 export function NavScrollExample({ title }) {
     function filtered(){
+        console.log("clicked");
 
     }
     const history = useHistory()
@@ -101,7 +103,7 @@ export function NavScrollExample({ title }) {
                                 aria-label="Search"
                               
                             />
-                            <Button class="btn btn-outline-warning me-2" onClick={()=>filtered}>Search</Button>
+                            <Button class="btn btn-outline-warning me-2" onClick={()=>filtered()}>Search</Button>
                         </Form>
                         <button class="btn btn-outline-warning me-2" type="button" onClick={() => history.push("/login")}>Login</button>
                     </Navbar.Collapse>

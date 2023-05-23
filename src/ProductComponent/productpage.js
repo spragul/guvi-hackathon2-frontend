@@ -3,18 +3,38 @@ import { useHistory } from 'react-router-dom';
 import { AppState } from '../provider/provider';
 import Sidebar from "../sidebar/sidebar";
 import { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import InputGroup from 'react-bootstrap/InputGroup';
 
 export default function ListOfProduct() {
     const { productData } = AppState();
     console.log(productData)
     const history = useHistory();
-
+    const [search, setSearch] = useState('');
 
     return (
         <Sidebar>
             <div className='book-condinar'>
+                <Form>
+                    <InputGroup className='my-3'>
+
+                        {/* onChange for search */}
+                        <Form.Control
+                            onChange={(e) => setSearch(e.target.value)}
+                            placeholder='Search product Name'
+                        />
+                    </InputGroup>
+                </Form>
+            </div>
+
+            <div className='book-condinar'>
                 {
-                    productData.map((productDatas, index) => (
+                   productData
+                   .filter((item) => {
+                     return search.toLowerCase() === ''
+                       ? item
+                       : item.productName.toLowerCase().includes(search.toLowerCase());
+                   }).map((productDatas, index) => (
                         <div key={index} className="book-card">
                             <h3>{productDatas.productName}</h3>
                             <img src={productDatas.image} alt={productDatas.productName} title={productDatas.productName} className="image"></img>
