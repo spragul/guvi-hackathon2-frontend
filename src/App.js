@@ -20,7 +20,7 @@ import PaymentApp from './cart/payment';
 function App() {
   return (
     <div className="App">
-      <Route path="/">
+      <Route exact path="/">
         <ListOfProduct/>
       </Route>
         <Route path="/cart/create/:productId/:index">
