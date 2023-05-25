@@ -5,23 +5,39 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter as Router } from 'react-router-dom';
 import AppProvider from './provider/provider';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 
 
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <Router>
-    <AppProvider>
-    <App />
-    </AppProvider>  
- </Router>
-//  <React.StrictMode>
- 
-//   <App />
+  <React.StrictMode>
+    <Router>
+      <AppProvider>
+        <App />
+      </AppProvider>
+      <ToastContainer
+        position="top-right"
+        autoClose={2000}
+        closeOnClick
+        pauseOnFocusLoss
+        pauseOnHover
+        theme="light"
+      />
+      <ToastContainer />
+
+    </Router>
+  </React.StrictMode>
+
+  //  <React.StrictMode>
+
+  //   <App />
 
 
-//     </React.StrictMode> 
+  //     </React.StrictMode> 
 
 );
 
