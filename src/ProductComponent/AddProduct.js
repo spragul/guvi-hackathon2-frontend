@@ -17,7 +17,7 @@ const userSchemaValidation = yup.object({
 export function AddProduct() {
   const history = useHistory();
   const { productData, setProductData } = AppState();
-  const addNewBook = async ({ newproduct }) => {
+  const addNewprodu = async ({ newproduct }) => {
     try {
       const response = await fetch(`${mainurl}/add/product`, {
         method: "POST",
@@ -50,7 +50,7 @@ export function AddProduct() {
     validationSchema: userSchemaValidation,
     onSubmit: (newproduct) => {
       console.log("on submit called :", newproduct)
-      addNewBook({ newproduct });
+      addNewprodu({ newproduct });
 
     }
 
@@ -61,17 +61,6 @@ export function AddProduct() {
       <div className='issued-container'>
 
         <form onSubmit={handleSubmit} className="text-areas">
-          {/* <TextField
-            fullWidth
-            id="fullWidth"
-            name="id"
-            onBlur={handleBlur}
-            label="ID"
-            variant="outlined"
-            value={values.id}
-            onChange={handleChange}
-          />
-          {touched.id && errors.id ? <p style={{ color: "crimson" }}>{errors.id}</p> : ""} */}
           <TextField
             fullWidth
             id="fullWidth"

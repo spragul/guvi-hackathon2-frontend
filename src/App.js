@@ -16,7 +16,7 @@ import { Cart } from './cart/cart';
 import { RentalCart } from './cart/rentalcart';
 import PaymentApp from './cart/payment';
 import { Firstpage } from './pages/firstpage';
-export const mainurl="http://localhost:5000"
+export const mainurl="https://guvi-hackathon2-backend-do9i.onrender.com"
 
 function App() {
   const MyRole = sessionStorage.getItem('myRole')
