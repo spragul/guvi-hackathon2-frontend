@@ -2,11 +2,13 @@ import * as yup from 'yup'
 import { useFormik } from "formik";
 import { Button, TextField } from "@mui/material";
 import { useHistory, useParams } from "react-router-dom";
-import { AppState } from "../provider/provider";
 import Sidebar from "../sidebar/sidebar";
+import { mainurl } from '../App';
+import { AppState } from '../provider/provider';
+
 
 const userSchemaValidation = yup.object({
-    id: yup.string().required("please specify Book ID"),
+    // id: yup.string().required("please specify Book ID"),
     productName: yup.string().required("Please fill in your product Name"),
     image: yup.string().required("please write proper image sorce"),
     model: yup.string().required("Please fill model?"),
@@ -17,13 +19,17 @@ const userSchemaValidation = yup.object({
 
 export function EditProducts() {
     const { productData, setProductData } = AppState();
+    console.log(productData)
     const history = useHistory();
     const { id } = useParams();
-    const selectedBook = productData.find((bk) => bk.id === id);
+    console.log(id)
+    const selectedProduct = productData.find((bk) => bk._id === id);
+
+    console.log(selectedProduct)
     const Editedlibrarybook = async ({ editproduct }) => {
 
         try {
-            const response = await fetch(`https://guvi-hackathon2-backend-do9i.onrender.com/product/edit/${id}`, {
+            const response = await fetch(`${mainurl}/product/edit/${id}`, {
                 method: "PUT",
                 body: JSON.stringify(editproduct),
                 headers: {
@@ -45,17 +51,17 @@ export function EditProducts() {
     const { values, handleChange, handleSubmit, handleBlur, errors, touched } = useFormik({
 
         initialValues: {
-            id: selectedBook.id,
-            name: selectedBook.name,
-            image: selectedBook.image,
-            model: selectedBook.model,
-            categories: selectedBook.categories,
-            price: selectedBook.price,
+            _id:selectedProduct._id,
+            productName: selectedProduct.productName,
+            image: selectedProduct.image,
+            model: selectedProduct.model,
+            categories: selectedProduct.categories,
+            price: selectedProduct.price,
         },
         validationSchema: userSchemaValidation,
         onSubmit: (editproduct) => {
             console.log("on submit called :", editproduct)
-            const editindex = productData.findIndex(bk => bk.id === id);
+            const editindex = productData.findIndex(bk => bk._id === id);
             productData[editindex] = editproduct;
             Editedlibrarybook({ editproduct })
 
@@ -69,17 +75,6 @@ export function EditProducts() {
             <div className='issued-container'>
 
                 <form onSubmit={handleSubmit} className="text-areas">
-                    <TextField
-                        fullWidth
-                        id="fullWidth"
-                        name="id"
-                        onBlur={handleBlur}
-                        label="ID"
-                        variant="outlined"
-                        value={values.id}
-                        onChange={handleChange}
-                    />
-                    {touched.id && errors.id ? <p style={{ color: "crimson" }}>{errors.id}</p> : ""}
                     <TextField
                         fullWidth
                         id="fullWidth"
@@ -142,7 +137,7 @@ export function EditProducts() {
                         type="submit"
                         color="success"
                     >
-                        Edit Book
+                        Edit product
                     </Button>
                 </form>
             </div>

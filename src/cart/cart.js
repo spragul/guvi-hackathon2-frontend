@@ -5,7 +5,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { AppState } from '../provider/provider';
 import { toast } from "react-toastify";
 import Sidebar from '../sidebar/sidebar';
-
+import { mainurl } from '../App';
 
 
 const userSchemaValidation = yup.object({
@@ -14,29 +14,33 @@ const userSchemaValidation = yup.object({
   userId: yup.string().required("please write proper userId"),
   startingDate: yup.string().required("Please fill startingDate?"),
   endingDate: yup.string().required("Please fill endingDate."),
-  price: yup.string().required("Please fill categories.")
+
 })
 
 export function Cart() {
-  const { productData } = AppState();
+  const { productData, issuesdata, setIssueddata } = AppState();
   const { productId, index } = useParams();
-  console.log(productId, productData)
-  const books = productData[index];
   const productDatas = productData[index];
+  console.log(productDatas.price,productDatas)
+  const UserId = sessionStorage.getItem('myid')
   const history = useHistory()
-  const sign = async ({ newuser }) => {
-    console.log(newuser);
+  const sign = async ({ newuseradd }) => { 
     try {
-      const response = await fetch(`https://guvi-hackathon2-backend-do9i.onrender.com/cart/create/${productId}`, {
-        method: "POST",
-        body: JSON.stringify(newuser),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-      const data = await response.json();
-      history.push("/detail/cart")
-      toast("User Data Add")
+         if(newuseradd.price !==0){
+          const response = await fetch(`${mainurl}/cart/create/${productId}`, {
+            method: "POST",
+            body: JSON.stringify(newuseradd),
+            headers: {
+              "Content-Type": "application/json",
+            },
+          })
+          const data = await response.json();
+          setIssueddata([...issuesdata, data])
+          history.push("/detail/cart")
+          toast("User Data Add")
+         }else{
+          toast("minmum select 1 hr")
+         }
 
     } catch (error) {
       console.log(error)
@@ -47,14 +51,44 @@ export function Cart() {
     initialValues: {
       productName: productDatas.productName,
       productId: productId,
-      userId: "",
+      userId: UserId,
       startingDate: "",
-      endingDate: "",
-      price: ""
+      endingDate: ""
     },
     validationSchema: userSchemaValidation,
     onSubmit: (newuser) => {
-      sign({ newuser });
+      let zero=0;
+      //starting date decode
+      let a = newuser.startingDate.split("T");
+      let b = a[0].split("-");
+      let date1 = b[0] + '/' + b[1] + '/' + b[2];
+      let c = a[1].split(':');
+      let time1 = c[0] + ":" + zero;
+      let day1 = date1 + " " + time1;
+     //ending date decode
+     let x = newuser.endingDate.split("T");
+     let y = x[0].split("-");
+     let date2 = y[0] + '/' + y[1] + '/' + y[2];
+     let z = x[1].split(':');
+     let time2 = z[0] + ":" +zero;
+     let day2 = date2 + " " + time2;
+
+     //time difrence calculated
+     var diff = Math.abs(new Date(day1) - new Date(day2));
+     var hr = Math.floor((diff/1000)/(60*60));
+     let totalPrice =hr*(productDatas.price)
+
+      let newuseradd = {
+        productName: newuser.productName,
+        productId: newuser.productId,
+        userId: newuser.userId,
+        startingDate: newuser.startingDate,
+        endingDate: newuser.endingDate,
+        price: totalPrice
+      }
+      console.log(newuseradd);
+
+      sign({ newuseradd });
       console.log(newuser)
     }
 
@@ -71,8 +105,6 @@ export function Cart() {
           <p style={{ color: "blue", fontSize: "40px" }}>model:{productDatas.model}</p>
           <p style={{ fontSize: "30px" }}>categories: {productDatas.categories}</p>
           <p style={{ fontSize: "30px" }}>price: {productDatas.price}</p>
-          <p style={{ fontSize: "30px" }}>id: {productDatas.id}</p>
-
 
 
           <form onSubmit={handleSubmit} className="text-areas">
@@ -135,17 +167,6 @@ export function Cart() {
               onChange={handleChange}
             />
             {touched.endingDate && errors.endingDate ? <p style={{ color: "crimson" }}>{errors.endingDate}</p> : ""}
-            <TextField
-              fullWidth
-              id="fullWidth"
-              label="price"
-              variant="outlined"
-              onBlur={handleBlur}
-              name="price"
-              value={values.price}
-              onChange={handleChange}
-            />
-            {touched.price && errors.price ? <p style={{ color: "crimson" }}>{errors.price}</p> : ""}
             <Button
               variant="contained"
               type="submit"

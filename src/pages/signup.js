@@ -13,22 +13,24 @@ import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import * as yup from 'yup'
-
+import { mainurl } from '../App';
 
 
 const userSchemaValidation = yup.object({
   name: yup.string().required("Please fill in your Name"),
   email: yup.string().required("Please fill in your Email"),
   password: yup.string().required("please write proper password"),
- 
+  role: yup.string().required("Enter your role user (or) admin"),
+  mobile: yup.string().required("Enter your mobile number"),
+
 })
 
 export function Signup() {
-  const history =useHistory()
+  const history = useHistory()
   const sign = async ({ newuser }) => {
     console.log(newuser);
     try {
-      const response = await fetch("https://guvi-hackathon2-backend-do9i.onrender.com/user/signup", {
+      const response = await fetch(`${mainurl}/user/signup`, {
         method: "POST",
         body: JSON.stringify(newuser),
         headers: {
@@ -36,9 +38,9 @@ export function Signup() {
         },
       })
       const data = await response.json();
-        history.push("/login")
-        toast("User Data Add")
-      
+      history.push("/login")
+      toast("User Data Add")
+
     } catch (error) {
       console.log(error)
       toast("error")
@@ -46,10 +48,10 @@ export function Signup() {
   }
   const { values, handleChange, handleSubmit, handleBlur, errors, touched } = useFormik({
     initialValues: {
-      name:'',
+      name: '',
       email: '',
-      role:'user',
-      mobile:'',
+      role: '',
+      mobile: '',
       password: '',
     },
     validationSchema: userSchemaValidation,
@@ -62,85 +64,91 @@ export function Signup() {
 
   return (
     <div className="bg-cl back">
-    <MDBContainer fluid style={{height:"100vh",height:'auto' }}>
+      <MDBContainer fluid style={{ height: "100vh", height: 'auto' }}>
 
-      <MDBRow className='d-flex justify-content-center align-items-center h-100'>
-        <MDBCol col='12'>
+        <MDBRow className='d-flex justify-content-center align-items-center h-100'>
+          <MDBCol col='12'>
 
-          <MDBCard className='bg-white my-5 mx-auto' style={{ borderRadius: '1rem', maxWidth: '500px' }}>
-            <MDBCardBody className='p-5 w-100 d-flex flex-column'>
+            <MDBCard className='bg-white my-5 mx-auto' style={{ borderRadius: '1rem', maxWidth: '500px' }}>
+              <MDBCardBody className='p-5 w-100 d-flex flex-column'>
 
-              <h2 className="fw-bold mb-2 text-center">Signup</h2>
-              <p className="text-white-50 mb-3">Please Register Details</p>
-              <form onSubmit={handleSubmit} className="text-areas">
-              <MDBInput onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.name}
-              wrapperClass='mb-4 w-100' 
-              label='Name' 
-              id='formControlLg' 
-              type='text' 
-              name='name'
-              size="lg" />
-               {touched.name && errors.name ? <p style={{ color: "crimson" }}>{errors.name}</p> : ""}
-               <MDBInput onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.role}
-              wrapperClass='mb-4 w-100' 
-              label='role' 
-              id='formControlLg' 
-              type='text' 
-              name='role'
-              size="lg" />
-               {touched.role && errors.role ? <p style={{ color: "crimson" }}>{errors.role}</p> : ""}
-               <MDBInput onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.mobile}
-              wrapperClass='mb-4 w-100' 
-              label='mobile' 
-              id='formControlLg' 
-              type='text' 
-              name='mobile'
-              size="lg" />
-               {touched.mobile && errors.mobile ? <p style={{ color: "crimson" }}>{errors.mobile}</p> : ""}
-              <MDBInput onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.email}
-              wrapperClass='mb-4 w-100' 
-              label='Email address' 
-              id='formControlLg' 
-              type='email' 
-              name="email"
-              size="lg" />
-               {touched.email && errors.email ? <p style={{ color: "crimson" }}>{errors.email}</p> : ""}
-              <MDBInput onChange={handleChange}
-              onBlur={handleBlur}
-              value={values.password}
-              wrapperClass='mb-4 w-100' 
-              label='Password' 
-              id='formControlLg' 
-              type='password' 
-              name='password'
-              size="lg" />
-               {touched.password && errors.password ? <p style={{ color: "crimson" }}>{errors.password}</p> : ""}
-             
-              <MDBBtn 
-              type="submit"
-              size='lg' >
-                Signup
-              </MDBBtn>
-              </form>
-              <hr></hr>
-              <div>
-                <a href="/login">Already have an account? Login!</a>
-              </div>
-            </MDBCardBody>
-          </MDBCard>
+                <h2 className="fw-bold mb-2 text-center">Signup</h2>
+                <p className="text-white-50 mb-3">Please Register Details</p>
+                <form onSubmit={handleSubmit} className="text-areas">
+                  <MDBInput onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.name}
+                    wrapperClass='mb-4 w-100'
+                    label='Name'
+                    id='formControlLg'
+                    placeholder="Enter your Name"
+                    type='text'
+                    name='name'
+                    size="lg" />
+                  {touched.name && errors.name ? <p style={{ color: "crimson" }}>{errors.name}</p> : ""}
+                  <MDBInput onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.role}
+                    wrapperClass='mb-4 w-100'
+                    label='role'
+                    id='formControlLg'
+                    type='text'
+                    name='role'
+                    placeholder="Enter your role user/admin"
+                    size="lg" />
+                  {touched.role && errors.role ? <p style={{ color: "crimson" }}>{errors.role}</p> : ""}
+                  <MDBInput onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.mobile}
+                    wrapperClass='mb-4 w-100'
+                    label='mobile'
+                    id='formControlLg'
+                    type='text'
+                    name='mobile'
+                    placeholder="Enter your mobile number"
+                    size="lg" />
+                  {touched.mobile && errors.mobile ? <p style={{ color: "crimson" }}>{errors.mobile}</p> : ""}
+                  <MDBInput onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.email}
+                    wrapperClass='mb-4 w-100'
+                    label='Email address'
+                    id='formControlLg'
+                    type='email'
+                    name="email"
+                    placeholder="Enter your emailid"
+                    size="lg" />
+                  {touched.email && errors.email ? <p style={{ color: "crimson" }}>{errors.email}</p> : ""}
+                  <MDBInput onChange={handleChange}
+                    onBlur={handleBlur}
+                    value={values.password}
+                    wrapperClass='mb-4 w-100'
+                    label='Password'
+                    id='formControlLg'
+                    type='password'
+                    placeholder="Enter your password"
+                    name='password'
+                    size="lg" />
+                  {touched.password && errors.password ? <p style={{ color: "crimson" }}>{errors.password}</p> : ""}
 
-        </MDBCol>
-      </MDBRow>
+                  <MDBBtn
+                    type="submit"
+                    size='lg' >
+                    Signup
+                  </MDBBtn>
+                </form>
+                <hr></hr>
+                <div>
+                  <a href="/login">Already have an account? Login!</a>
+                </div>
+              </MDBCardBody>
+            </MDBCard>
 
-    </MDBContainer>
+          </MDBCol>
+        </MDBRow>
+
+      </MDBContainer>
+      
     </div>
   );
 }

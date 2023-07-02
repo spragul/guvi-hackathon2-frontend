@@ -4,9 +4,9 @@ import { Button, TextField } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { AppState } from "../provider/provider"
 import Sidebar from "../sidebar/sidebar";
+import {mainurl} from "../App"
 
 const userSchemaValidation = yup.object({
-  id: yup.string().required("please specify Book ID"),
   productName: yup.string().required("Please fill in your product Name"),
   image: yup.string().required("please write proper image sorce"),
   model: yup.string().required("Please fill model?"),
@@ -19,7 +19,7 @@ export function AddProduct() {
   const { productData, setProductData } = AppState();
   const addNewBook = async ({ newproduct }) => {
     try {
-      const response = await fetch("https://guvi-hackathon2-backend-do9i.onrender.com/add/product", {
+      const response = await fetch(`${mainurl}/add/product`, {
         method: "POST",
         body: JSON.stringify(newproduct),
         headers: {
@@ -41,7 +41,6 @@ export function AddProduct() {
 
   const { values, handleChange, handleSubmit, handleBlur, errors, touched } = useFormik({
     initialValues: {
-      id: "",
       productName: "",
       image: "",
       model: "",
@@ -62,7 +61,7 @@ export function AddProduct() {
       <div className='issued-container'>
 
         <form onSubmit={handleSubmit} className="text-areas">
-          <TextField
+          {/* <TextField
             fullWidth
             id="fullWidth"
             name="id"
@@ -72,7 +71,7 @@ export function AddProduct() {
             value={values.id}
             onChange={handleChange}
           />
-          {touched.id && errors.id ? <p style={{ color: "crimson" }}>{errors.id}</p> : ""}
+          {touched.id && errors.id ? <p style={{ color: "crimson" }}>{errors.id}</p> : ""} */}
           <TextField
             fullWidth
             id="fullWidth"

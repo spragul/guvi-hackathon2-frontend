@@ -4,16 +4,18 @@ import React, { useEffect, useState } from 'react';
 import { AppState } from '../provider/provider';
 import { useParams } from 'react-router-dom';
 import Sidebar from '../sidebar/sidebar';
+import { mainurl } from '../App';
 
 function PaymentApp() {
 	const [loading, setLoading] = useState(false);
-	const [orderAmount, setOrderAmount] = useState(0);
 	const [orders, setOrders] = useState([]);
-	const { productData } = AppState()
-	const { index } = useParams();
-	const productDatas = productData[index];
+	const { productData,issuesdata } = AppState();;
+	const {productid,cartid } = useParams();
+	const productDatas =  productData.find((bk) => bk._id === productid);
+	const amountvalue =issuesdata.find((is) => is._id === cartid);
+	const [orderAmount, setOrderAmount] = useState(amountvalue.price);
 	async function fetchOrders() {
-		const { data } = await axios.get('https://guvi-hackathon2-backend-do9i.onrender.com/payment/list-orders');
+		const { data } = await axios.get(`${mainurl}/payment/list-orders`);
 		setOrders(data);
 	}
 	useEffect(() => {
@@ -29,23 +31,23 @@ function PaymentApp() {
 		script.onload = async () => {
 			try {
 				setLoading(true);
-				const result = await axios.post('https://guvi-hackathon2-backend-do9i.onrender.com/payment/create-order', {
+				const result = await axios.post(`${mainurl}/payment/create-order`, {
 					amount: orderAmount + '00',
 				});
 				const { amount, id: order_id, currency } = result.data;
 				const {
 					data: { key: razorpayKey },
-				} = await axios.get('https://guvi-hackathon2-backend-do9i.onrender.com/payment/get-razorpay-key');
+				} = await axios.get(`${mainurl}/payment/get-razorpay-key`);
 
 				const options = {
 					key: razorpayKey,
 					amount: amount.toString(),
 					currency: currency,
-					name: 'example name',
-					description: 'example transaction',
+					name: 'Rental App',
+					description: productDatas.productName+"rental pay",
 					order_id: order_id,
 					handler: async function (response) {
-						const result = await axios.post('https://guvi-hackathon2-backend-do9i.onrender.com/payment/pay-order', {
+						const result = await axios.post(`${mainurl}/payment/pay-order`, {
 							amount: amount,
 							razorpayPaymentId: response.razorpay_payment_id,
 							razorpayOrderId: response.razorpay_order_id,
@@ -57,7 +59,7 @@ function PaymentApp() {
 					prefill: {
 						name: 'example name',
 						email: 'email@example.com',
-						contact: '111111',
+						contact: '9876543210',
 					},
 					notes: {
 						address: 'example address',
@@ -88,7 +90,7 @@ function PaymentApp() {
 					<img style={{ width: "300px", height: "300px" }} src={productDatas.image} title={productDatas.productName} alt={productDatas.productName}></img>
 					<p style={{ color: "blue", fontSize: "40px" }}>model:{productDatas.model}</p>
 					<p style={{ fontSize: "30px" }}>categories: {productDatas.categories}</p>
-					<p style={{ fontSize: "30px" }}>price: {productDatas.price}</p>
+					<p style={{ fontSize: "30px",color:"#ff00bc" }}>Total Price: {amountvalue.price}</p>
 				</div>
 			</div>
 			<div>
@@ -99,7 +101,6 @@ function PaymentApp() {
 						placeholder="INR"
 						type="number"
 						value={orderAmount}
-						onChange={(e) => setOrderAmount(e.target.value)}
 					></input>
 				</label>
 
@@ -137,4 +138,3 @@ function PaymentApp() {
 }
 
 export default PaymentApp;
-

@@ -2,6 +2,7 @@ import Table from 'react-bootstrap/Table';
 import { useHistory } from 'react-router-dom';
 import { AppState } from '../provider/provider';
 import Sidebar from '../sidebar/sidebar';
+import { mainurl } from '../App';
 
 function DarkExample() {
   return (
@@ -25,12 +26,12 @@ function ListTable({ heading, sty }) {
   const history = useHistory();
   const productDelete = async (idx) => {
     try {
-      const response = await fetch(`https://guvi-hackathon2-backend-do9i.onrender.com/product/delete/${idx}`, {
+      const response = await fetch(`${mainurl}/product/delete/${idx}`, {
         method: "Delete"
       })
       const data = await response.json();
       console.log(data);
-      const productAlterList = productData.filter((bk) => bk.id !== idx);
+      const productAlterList = productData.filter((bk) => bk._id !== idx);
       setProductData(productAlterList)
 
     } catch (error) {
@@ -63,16 +64,15 @@ function ListTable({ heading, sty }) {
               <td><div className='btn-group'>
                 <button
                   className='button button-edit'
-                  onClick={() => history.push(`/edit/productData/${prod.id}`)}
+                  onClick={() => history.push(`/edit/product/${prod._id}`)}
                 >Edit
                 </button>
                 <button
                   className='button button-delete'
-                  onClick={() => productDelete(prod.id)}
+                  onClick={() => productDelete(prod._id)}
                 >Delete
                 </button>
               </div></td>
-             
             </tr>
           </tbody>
         ))}
@@ -86,12 +86,12 @@ export function Isstable({ heading, sty }) {
   const { issuesdata, setIssueddata } = AppState();
   const productDelete = async (idx) => {
     try {
-      const response = await fetch(`https://guvi-hackathon2-backend-do9i.onrender.com/cart/delete/${idx}`, {
+      const response = await fetch(`${mainurl}/cart/delete/${idx}`, {
         method: "Delete"
       })
       const data = await response.json();
       console.log(data);
-      const productAlterList = issuesdata.filter((bk) => bk.id !== idx);
+      const productAlterList = issuesdata.filter((bk) => bk._id !== idx);
       setIssueddata(productAlterList)
 
     } catch (error) {

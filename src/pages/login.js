@@ -13,7 +13,7 @@ import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import * as yup from 'yup'
-
+import { mainurl } from '../App';
 
 const userSchemaValidation = yup.object({
   email: yup.string().required("Please fill in your Email"),
@@ -26,7 +26,7 @@ export function Login() {
   const history =useHistory()
   const log = async ({ loginuser }) => {
     try {
-      const response = await fetch("https://guvi-hackathon2-backend-do9i.onrender.com/user/login", {
+      const response = await fetch(`${mainurl}/user/login`, {
         method: "POST",
         body: JSON.stringify(loginuser),
         headers: {
@@ -34,10 +34,17 @@ export function Login() {
         },
       })
       const data = await response.json();
-      sessionStorage.setItem('token',data.token)
-        history.push("/")
+      console.log(data);
+      let token=data.token;
+      sessionStorage.setItem('token',data.token);
+      sessionStorage.setItem('myRole',data.myRole);
+      sessionStorage.setItem('myName',data.myName);
+      sessionStorage.setItem('myid',data.myid);
+      if(token){
+        history.push("/dashboard")
         toast("User login successful")
-    
+      }
+
     } catch (error) {
       console.log(error)
       toast("error")

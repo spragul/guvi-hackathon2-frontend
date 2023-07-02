@@ -4,10 +4,9 @@ import {
     FaBookReader,
     FaRegFileAlt,
     FaVolleyballBall,
-    BsCartCheck
+    FaShoppingCart
 
 } from "react-icons/fa";
-import { FaBeer } from 'react-icons/fa';
 import { NavLink, useHistory } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Button from 'react-bootstrap/Button';
@@ -19,30 +18,43 @@ import Navbar from 'react-bootstrap/Navbar';
 
 
 function Sidebar({ children }) {
+    const Name = sessionStorage.getItem('myName');
+    const MyRole = sessionStorage.getItem('myRole')
+        const menuItem = [
+            {
+                path: "/dashboard",
+                name: "Dashboard",
+                icon: <FaBookReader />
+            },
+            {
+                path: "/add/product",
+                name: "Add Product",
+                icon: <FaRegEdit />
+            },
+            {
+                path: "/product/issued",
+                name: "Issude Product",
+                icon: <FaRegFileAlt />
+            },
+            {
+                path: "/admin",
+                name: "Admin",
+                icon: <FaUserSecret />
+            }
 
-    const menuItem = [
-        {
-            path: "/",
-            name: "Dashboard",
-            icon: <FaBookReader />
-        },
-        {
-            path: "/add/product",
-            name: "Add Product",
-            icon: <FaRegEdit />
-        },
-        {
-            path: "/product/issued",
-            name: "Issude Product",
-            icon: <FaRegFileAlt />
-        },
-        {
-            path: "/admin",
-            name: "Admin",
-            icon: <FaUserSecret />
-        }
-        
-    ]
+        ]
+        const menuItem1 = [
+            {
+                path: "/dashboard",
+                name: "Dashboard",
+                icon: <FaBookReader />
+            },{
+                path: "/detail/cart",
+                name: "Cart",
+                icon: <FaShoppingCart />
+            }
+        ]
+
     return (
         <div className="sid-container">
 
@@ -51,8 +63,13 @@ function Sidebar({ children }) {
                     <div className="icon"><FaVolleyballBall /></div>
                     <div className="link d-none d-sm-inline">Rental App </div>
                 </div>
-                {
+                {MyRole==="admin" ?
                     menuItem.map((item, index) => (
+                        <NavLink to={item.path} key={index} className="link text-deactron" activeclassName="active">
+                            <div className="icon">{item.icon}</div>
+                            <div className="ms-3 d-none d-sm-inline">{item.name}</div>
+                        </NavLink>
+                    )) :    menuItem1.map((item, index) => (
                         <NavLink to={item.path} key={index} className="link text-deactron" activeclassName="active">
                             <div className="icon">{item.icon}</div>
                             <div className="ms-3 d-none d-sm-inline">{item.name}</div>
@@ -62,7 +79,9 @@ function Sidebar({ children }) {
             </div>
 
             <main>
-                <NavScrollExample />
+                <NavScrollExample
+                    title={Name}
+                />
                 {children}
                 <Footer />
             </main>
@@ -74,16 +93,29 @@ function Sidebar({ children }) {
 export default Sidebar;
 
 export function NavScrollExample({ title }) {
-    function filtered(){
+    const MyRole = sessionStorage.getItem('myRole')
+    function filtered() {
         console.log("clicked");
 
+    }
+    function logout() {
+        sessionStorage.clear();
+        history.push("/login")
+    }
+    function adminlogin(){
+        if(MyRole==="admin"){
+            alert("You are Admin")
+        }else{
+            sessionStorage.clear();
+            history.push("/login")
+        }
     }
     const history = useHistory()
     return (
         <div>
             <Navbar className="nav-clr" expand="lg">
                 <Container fluid>
-                    <Navbar.Brand href="#" className="title">{title}</Navbar.Brand>
+                    <Navbar.Brand href="#" style={{ color: "gold", fontSize: "30px" }} className="title">{title}</Navbar.Brand>
                     <Navbar.Toggle aria-controls="navbarScroll" />
                     <Navbar.Collapse id="navbarScroll">
                         <Nav
@@ -91,9 +123,10 @@ export function NavScrollExample({ title }) {
                             style={{ maxHeight: '100px' }}
                             navbarScroll
                         >
-                            <button class="btn btn-outline-warning me-2" type="button" onClick={() => history.push("/")}>Home</button>
-                           <button class="btn btn-outline-warning me-2" type="button" onClick={() => history.push("/detail/cart")}> <div className="icon"></div><FaBeer />cart</button>
-                           
+                            <button class="btn btn-outline-warning me-2" type="button" onClick={() => history.push("/dashboard")}>Home</button>
+                            {MyRole ==="user" ?
+                            <button class="btn btn-outline-warning me-2" type="button" onClick={() => history.push("/detail/cart")}> <div className="icon"></div><FaShoppingCart />cart</button>: ""
+                            }
                         </Nav>
                         <Form className="d-flex">
                             <Form.Control
@@ -101,11 +134,12 @@ export function NavScrollExample({ title }) {
                                 placeholder="Search"
                                 className="me-2"
                                 aria-label="Search"
-                              
+
                             />
-                            <Button class="btn btn-outline-warning me-2" onClick={()=>filtered()}>Search</Button>
+                            <Button class="btn btn-outline-warning me-2" onClick={() => filtered()}>Search</Button>
                         </Form>
-                        <button class="btn btn-outline-warning me-2" type="button" onClick={() => history.push("/login")}>Login</button>
+                        <button class="btn btn-outline-warning me-2" type="button" onClick={()=>logout()}>Logout</button>
+                        <button class="btn btn-outline-warning me-2" type="button" onClick={()=>adminlogin()} >Adminlogin</button>
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
@@ -119,7 +153,7 @@ export function Footer() {
         <div>
             <footer>
                 contact us
-                <div>email : Ragullibrary23@gmail.com</div>
+                <div>email : Ragulrentalapp23@gmail.com</div>
                 <div>phone : 9788652355</div>
             </footer>
         </div>

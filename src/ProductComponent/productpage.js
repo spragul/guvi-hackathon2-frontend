@@ -11,7 +11,7 @@ export default function ListOfProduct() {
     console.log(productData)
     const history = useHistory();
     const [search, setSearch] = useState('');
-
+    const MyRole = sessionStorage.getItem('myRole');
     return (
         <Sidebar>
             <div className='book-condinar'>
@@ -29,42 +29,39 @@ export default function ListOfProduct() {
 
             <div className='book-condinar'>
                 {
-                   productData
-                   .filter((item) => {
-                     return search.toLowerCase() === ''
-                       ? item
-                       : item.productName.toLowerCase().includes(search.toLowerCase());
-                   }).map((productDatas, index) => (
-                        <div key={index} className="book-card">
-                            <h3>{productDatas.productName}</h3>
-                            <img src={productDatas.image} alt={productDatas.productName} title={productDatas.productName} className="image"></img>
-                            <p style={{ margin: "0px" }}>{productDatas.model}</p>
-                            <p style={{ margin: "0px" }}>{productDatas.categories}</p>
-                            <p style={{ margin: "0px" }}>{productDatas.price}</p>
-                            <p style={{ fontSize: "30px", margin: "0px" }}>id: {productDatas.id}</p>
-                            <div className='btn-group'>
+                    productData
+                        .filter((item) => {
+                            return search.toLowerCase() === ''
+                                ? item
+                                : item.productName.toLowerCase().includes(search.toLowerCase());
+                        }).map((productDatas, index) => (
+                            <div key={index} className="book-card">
+                                <h3>{productDatas.productName}</h3>
+                                <img src={productDatas.image} alt={productDatas.productName} title={productDatas.productName} className="image"></img>
+                                <p style={{ margin: "0px" }}><span style={{ color: "blue" }}>model:</span>{productDatas.model}</p>
+                                <p style={{ margin: "0px" }}><span style={{ color: "blue" }}>Categories:</span>{productDatas.categories}</p>
+                                <p style={{ margin: "0px" }}><span style={{ color: "blue" }}>Price:</span>{productDatas.price}/hr</p>
+
+                                <div className='btn-group'>
 
 
-                                <button
-                                    className='button button-view'
-                                    onClick={() => history.push(`/product/detail/${index}`)}
-                                >View Detail
-                                </button>
-                                <button
-                                    className='button button-view'
-                                    onClick={() => history.push(`/rentalpay/payment/${index}`)}
-                                >Buy
-                                </button>
-                                <div>
                                     <button
                                         className='button button-view'
-                                        onClick={() => history.push(`/cart/create/${productDatas._id}/${index}`)}
-                                    >Add to cart
+                                        onClick={() => history.push(`/product/detail/${index}`)}
+                                    >View Detail
                                     </button>
+                                    { MyRole ==="user" ?
+                                        <div>
+                                            <button
+                                                className='button button-view'
+                                                onClick={() => history.push(`/cart/create/${productDatas._id}/${index}`)}
+                                            >Add to cart
+                                            </button>
+                                        </div> :""
+                                    }
                                 </div>
                             </div>
-                        </div>
-                    ))
+                        ))
                 }
             </div>
         </Sidebar>

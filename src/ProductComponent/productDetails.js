@@ -5,6 +5,7 @@ import Sidebar from "../sidebar/sidebar";
 export function ProductDetails() {
     const { productData } = AppState();
     const { id } = useParams();
+    console.log(id);
     const history = useHistory();
     const productDatas = productData[id];
     return (
@@ -16,10 +17,10 @@ export function ProductDetails() {
                     <p style={{ color: "blue", fontSize: "40px" }}>model:{productDatas.model}</p>
                     <p style={{ fontSize: "30px" }}>categories: {productDatas.categories}</p>
                     <p style={{ fontSize: "30px" }}>price: {productDatas.price}</p>
-                    <p style={{ fontSize: "30px" }}>id: {productDatas.id}</p>
+                    
                     <button
                         style={{ borderRadius: "10px", backgroundColor: "gold" }}
-                        onClick={() => history.push("/")}
+                        onClick={() => history.push("/dashboard")}
                     >Product List</button>
                 </div>
 

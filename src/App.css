@@ -28,6 +28,13 @@ main {
 
 }
 
+.firstpage-button:hover{
+  border: 2px solid rgb(31, 167, 31);
+  border-radius: 5px;
+  background-color: #bbbde6;
+  color: #f70f0f;
+}
+
 .sidebar {
   background: #4d58ee;
   color: #fff;
@@ -126,24 +133,31 @@ Book List*/
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  background-color: rgb(233, 191, 85);
+  background-color: #0dcaf042;
   margin: 5px;
   padding: 5px;
   gap: 1rem;
 }
 
 .book-card{
-  background-color: rgb(166, 87, 219);
+  background-color: rgb(168 243 134 / 98%);
   border-radius : 10px;
   width : 350px;
-  height : 470px;
+  height : 450px;
 
 }
 .cart-card{
-  background-color: rgb(169, 245, 235);
+  background-color: rgb(245, 169, 239);
   border-radius : 10px;
   width : 350px;
   height : 250px;
+   box-shadow: #e9780e 0px 0px 30px
+
+}
+.cart-btn:hover{
+  background-color:royalblue;
+  color: #000;
+
 }
 .image{
 width: 220px;

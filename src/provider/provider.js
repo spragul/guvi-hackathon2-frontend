@@ -1,14 +1,16 @@
 import { useEffect } from "react";
 import { createContext, useContext, useState } from "react";
+import { mainurl } from "../App";
 
 const AppContext = createContext();
 const AppProvider = ({ children }) => {
     const [productData, setProductData] = useState([]);
     const [issuesdata, setIssueddata] = useState([]);
+
     useEffect(() => {
         const getDetails = async () => {
             try {
-                const response = await fetch("https://guvi-hackathon2-backend-do9i.onrender.com", {
+                const response = await fetch(`${mainurl}`, {
                     method: "GET"
                 });
                 const data = await response.json();
@@ -23,7 +25,7 @@ const AppProvider = ({ children }) => {
     useEffect(() => {
         const getDetails = async () => {
             try {
-                const response = await fetch("https://guvi-hackathon2-backend-do9i.onrender.com/cart/", {
+                const response = await fetch(`${mainurl}/cart`, {
                     method: "GET"
                 });
                 const data = await response.json();
