@@ -59,7 +59,7 @@ function PaymentApp() {
 					prefill: {
 						name: 'example name',
 						email: 'email@example.com',
-						contact: '9876543210',
+						contact: '111',
 					},
 					notes: {
 						address: 'example address',
