@@ -19,25 +19,23 @@ const userSchemaValidation = yup.object({
 
 export function EditProducts() {
     const { productData, setProductData } = AppState();
-    console.log(productData)
     const history = useHistory();
     const { id } = useParams();
-    console.log(id)
     const selectedProduct = productData.find((bk) => bk._id === id);
+    const token=sessionStorage.getItem('token');
 
-    console.log(selectedProduct)
     const Editedlibrarybook = async ({ editproduct }) => {
-
         try {
             const response = await fetch(`${mainurl}/product/edit/${id}`, {
                 method: "PUT",
                 body: JSON.stringify(editproduct),
                 headers: {
                     "Content-Type": "application/json",
+                    'Authorization': `Bearer ${token}`
                 },
             })
             const data = await response.json();
-            console.log(data);
+            // console.log(data);
             setProductData([...productData])
             history.push("/admin")
 

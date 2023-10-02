@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { AppState } from '../provider/provider';
 import Sidebar from '../sidebar/sidebar';
 import { mainurl } from '../App';
+import { UserList } from './userlist';
 
 function DarkExample() {
   return (
@@ -11,10 +12,7 @@ function DarkExample() {
         heading="List Of Product"
         sty="bg-info text-white"
       />
-      <Isstable
-        heading="List of Issued Product"
-        sty="bg-warning text-dark"
-      />
+      <UserList/>
     </Sidebar>
   );
 }
@@ -24,20 +22,23 @@ export default DarkExample;
 function ListTable({ heading, sty }) {
   const { productData, setProductData } = AppState();
   const history = useHistory();
+  const token = sessionStorage.getItem('token');
+  //delete product
   const productDelete = async (idx) => {
     try {
       const response = await fetch(`${mainurl}/product/delete/${idx}`, {
-        method: "Delete"
+        method: "Delete",
+        headers: { "Authorization": `Bearer ${token}` }
       })
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       const productAlterList = productData.filter((bk) => bk._id !== idx);
       setProductData(productAlterList)
 
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      alert(error)
     }
-
 
   }
 
@@ -84,10 +85,12 @@ function ListTable({ heading, sty }) {
 
 export function Isstable({ heading, sty }) {
   const { issuesdata, setIssueddata } = AppState();
+  const token = sessionStorage.getItem('token');
   const productDelete = async (idx) => {
     try {
       const response = await fetch(`${mainurl}/cart/delete/${idx}`, {
-        method: "Delete"
+        method: "Delete",
+        headers: { "Authorization": `Bearer ${token}` }
       })
       const data = await response.json();
       console.log(data);
@@ -95,7 +98,8 @@ export function Isstable({ heading, sty }) {
       setIssueddata(productAlterList)
 
     } catch (error) {
-      console.log(error)
+      console.log(error);
+      alert(error);
     }
 
 
@@ -106,7 +110,7 @@ export function Isstable({ heading, sty }) {
       <h1 className={sty}>{heading}</h1>
       <Table striped bordered hover variant="dark">
         <thead>
-          <tr>  
+          <tr>
             <th>product Name</th>
             <th>price</th>
             <th>BUTTON</th>

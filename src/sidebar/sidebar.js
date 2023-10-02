@@ -4,7 +4,8 @@ import {
     FaBookReader,
     FaRegFileAlt,
     FaVolleyballBall,
-    FaShoppingCart
+    FaShoppingCart,
+    FaLuggageCart
 
 } from "react-icons/fa";
 import { NavLink, useHistory } from 'react-router-dom';
@@ -32,14 +33,14 @@ function Sidebar({ children }) {
                 icon: <FaRegEdit />
             },
             {
-                path: "/product/issued",
-                name: "Issude Product",
-                icon: <FaRegFileAlt />
-            },
-            {
                 path: "/admin",
                 name: "Admin",
                 icon: <FaUserSecret />
+            },
+            {
+                path:'/myorders',
+                name:"Orders",
+                icon:<FaLuggageCart/>
             }
 
         ]
@@ -48,10 +49,15 @@ function Sidebar({ children }) {
                 path: "/dashboard",
                 name: "Dashboard",
                 icon: <FaBookReader />
-            },{
+            },
+            {
                 path: "/detail/cart",
                 name: "Cart",
                 icon: <FaShoppingCart />
+            },            {
+                path:'/myorders',
+                name:"Orders",
+                icon:<FaLuggageCart/>
             }
         ]
 

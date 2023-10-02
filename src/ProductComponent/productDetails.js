@@ -5,7 +5,6 @@ import Sidebar from "../sidebar/sidebar";
 export function ProductDetails() {
     const { productData } = AppState();
     const { id } = useParams();
-    console.log(id);
     const history = useHistory();
     const productDatas = productData[id];
     return (

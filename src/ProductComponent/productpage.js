@@ -1,17 +1,57 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { AppState } from '../provider/provider';
 import Sidebar from "../sidebar/sidebar";
 import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import { mainurl } from '../App';
 
 export default function ListOfProduct() {
-    const { productData } = AppState();
-    console.log(productData)
+    const { productData,setProductData,setIssueddata } = AppState();
     const history = useHistory();
     const [search, setSearch] = useState('');
     const MyRole = sessionStorage.getItem('myRole');
+    const token=sessionStorage.getItem('token');
+
+    //product
+    useEffect(() => {
+        const getDetails = async () => {
+            try {
+                const headers = { 'Authorization': `Bearer ${token}` };
+                const response = await fetch(`${mainurl}`,{ headers });
+                const data = await response.json();
+                const setdata =data.product
+                // console.log(setdata);
+                setProductData(setdata)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        if(token){
+        getDetails();
+        }
+    }, [])
+//cart
+    useEffect(() => {
+        const id=sessionStorage.getItem('myid')
+        const getDetails = async (id) => {
+            try {
+                const headers = { 'Authorization': `Bearer ${token}` };
+                const response = await fetch(`${mainurl}/cart/${id}`, { headers });
+                const data = await response.json();
+                //  console.log(data);
+                let setdata=data.carts;
+                setIssueddata(setdata)
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        if(token){
+            getDetails(id);
+        }
+    }, [])
+    
     return (
         <Sidebar>
             <div className='book-condinar'>

@@ -4,19 +4,20 @@ import { Button, TextField } from "@mui/material";
 import { useHistory } from "react-router-dom";
 import { AppState } from "../provider/provider"
 import Sidebar from "../sidebar/sidebar";
-import {mainurl} from "../App"
+import { mainurl } from "../App"
 
 const userSchemaValidation = yup.object({
   productName: yup.string().required("Please fill in your product Name"),
   image: yup.string().required("please write proper image sorce"),
   model: yup.string().required("Please fill model?"),
   categories: yup.string().required("Please fill categories."),
- price: yup.string().required("Please fill categories.")
+  price: yup.string().required("Please fill categories.")
 })
 
 export function AddProduct() {
   const history = useHistory();
   const { productData, setProductData } = AppState();
+  const token = sessionStorage.getItem('token');
   const addNewprodu = async ({ newproduct }) => {
     try {
       const response = await fetch(`${mainurl}/add/product`, {
@@ -24,10 +25,11 @@ export function AddProduct() {
         body: JSON.stringify(newproduct),
         headers: {
           "Content-Type": "application/json",
+          'Authorization': `Bearer ${token}`
         },
       })
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       setProductData([...productData, data])
       history.push("/admin")
 
@@ -49,7 +51,7 @@ export function AddProduct() {
     },
     validationSchema: userSchemaValidation,
     onSubmit: (newproduct) => {
-      console.log("on submit called :", newproduct)
+      // console.log("on submit called :", newproduct)
       addNewprodu({ newproduct });
 
     }

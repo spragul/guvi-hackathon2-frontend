@@ -6,36 +6,43 @@ const AppContext = createContext();
 const AppProvider = ({ children }) => {
     const [productData, setProductData] = useState([]);
     const [issuesdata, setIssueddata] = useState([]);
-
+    
+    const token=sessionStorage.getItem('token');
+    console.log(token);
     useEffect(() => {
         const getDetails = async () => {
             try {
-                const response = await fetch(`${mainurl}`, {
-                    method: "GET"
-                });
+                const headers = { 'Authorization': `Bearer ${token}` };
+                const response = await fetch(`${mainurl}`,{ headers });
                 const data = await response.json();
                 const setdata =data.product
+                console.log(setdata);
                 setProductData(setdata)
             } catch (error) {
                 console.log(error);
             }
         }
+        if(token){
         getDetails();
+        }
     }, [])
     useEffect(() => {
-        const getDetails = async () => {
+        const id=sessionStorage.getItem('myid')
+        const getDetails = async (id) => {
             try {
-                const response = await fetch(`${mainurl}/cart`, {
-                    method: "GET"
-                });
+                const headers = { 'Authorization': `Bearer ${token}` };
+                const response = await fetch(`${mainurl}/cart/${id}`, { headers });
                 const data = await response.json();
+                 console.log(data);
                 let setdata=data.carts;
                 setIssueddata(setdata)
             } catch (error) {
                 console.log(error);
             }
         }
-        getDetails();
+        if(token){
+            getDetails(id);
+        }
     }, [])
 
 

@@ -21,9 +21,11 @@ export function Cart() {
   const { productData, issuesdata, setIssueddata } = AppState();
   const { productId, index } = useParams();
   const productDatas = productData[index];
-  console.log(productDatas.price,productDatas)
+  // console.log(productDatas.price,productDatas)
   const UserId = sessionStorage.getItem('myid')
   const history = useHistory()
+  const token=sessionStorage.getItem('token');
+
   const sign = async ({ newuseradd }) => { 
     try {
          if(newuseradd.price !==0){
@@ -32,12 +34,13 @@ export function Cart() {
             body: JSON.stringify(newuseradd),
             headers: {
               "Content-Type": "application/json",
+              'Authorization': `Bearer ${token}`
             },
           })
           const data = await response.json();
           setIssueddata([...issuesdata, data])
           history.push("/detail/cart")
-          toast("User Data Add")
+          toast("Your product Add to cart")
          }else{
           toast("minmum select 1 hr")
          }

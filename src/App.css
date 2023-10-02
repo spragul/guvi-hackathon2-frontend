@@ -229,6 +229,10 @@ box-shadow: 0 5px 25px rgba(0,0,0,.2);
   height: 30px;
 
 }
+
+.list-orders h2{
+  background-color: rgb(216, 224, 101);
+}
 /* Add Boook end */
 /* |table */
 .table-container{
@@ -290,4 +294,8 @@ box-shadow: 0 5px 25px rgba(0,0,0,.2);
   flex-direction: column;
   gap : 0.5rem;
   margin : 12px;
+}
+
+.order-container{
+  background-color: #25bcff;
 }

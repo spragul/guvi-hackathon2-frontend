@@ -11,6 +11,7 @@ import { useFormik } from "formik";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import * as yup from 'yup'
+import { Link } from 'react-router-dom/cjs/react-router-dom';
 
 
 const userSchemaValidation = yup.object({
@@ -75,7 +76,7 @@ export function Forgot() {
             size='lg'
           >Reset Password link</MDBBtn>
           <div>
-            <a href="/login">Already have an account? Login!</a>
+            <Link to="/login">Already have an account? Login!</Link>
           </div>
           </form>
         </MDBCardBody>

@@ -1,26 +1,42 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
+import React, {useState } from 'react';
 import { AppState } from '../provider/provider';
 import { useParams } from 'react-router-dom';
 import Sidebar from '../sidebar/sidebar';
 import { mainurl } from '../App';
+import { toast } from 'react-toastify';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 
 function PaymentApp() {
 	const [loading, setLoading] = useState(false);
-	const [orders, setOrders] = useState([]);
-	const { productData,issuesdata } = AppState();;
+	const { productData,issuesdata,setIssueddata } = AppState();;
 	const {productid,cartid } = useParams();
 	const productDatas =  productData.find((bk) => bk._id === productid);
 	const amountvalue =issuesdata.find((is) => is._id === cartid);
 	const [orderAmount, setOrderAmount] = useState(amountvalue.price);
-	async function fetchOrders() {
-		const { data } = await axios.get(`${mainurl}/payment/list-orders`);
-		setOrders(data);
-	}
-	useEffect(() => {
-		fetchOrders();
-	}, []);
+	const myid=sessionStorage.getItem('myid');
+	const history=useHistory();
+	const token=sessionStorage.getItem('token');
+
+	//delete cart
+	async function deletecart(id){
+        try {
+            const response = await fetch(`${mainurl}/cart/delete/${id}`, {
+                method: "Delete",
+				headers:{'Authorization': `Bearer ${token}`}
+              })
+              const data = await response.json();
+            //   console.log(data);
+              const productAlterList = issuesdata.filter((bk) => bk._id !== id);
+              setIssueddata(productAlterList)
+              toast("Removed cart item successful!");
+        } catch (error) {
+            console.log(error);
+			alert(error);
+        }
+
+    }
 
 	function loadRazorpay() {
 		const script = document.createElement('script');
@@ -32,8 +48,8 @@ function PaymentApp() {
 			try {
 				setLoading(true);
 				const result = await axios.post(`${mainurl}/payment/create-order`, {
-					amount: orderAmount + '00',
-				});
+					amount: orderAmount + '00'
+				},{ headers: {"Authorization" : `Bearer ${token}`}});
 				const { amount, id: order_id, currency } = result.data;
 				const {
 					data: { key: razorpayKey },
@@ -48,18 +64,23 @@ function PaymentApp() {
 					order_id: order_id,
 					handler: async function (response) {
 						const result = await axios.post(`${mainurl}/payment/pay-order`, {
+							product:productDatas,
+							userId:myid,
 							amount: amount,
 							razorpayPaymentId: response.razorpay_payment_id,
 							razorpayOrderId: response.razorpay_order_id,
 							razorpaySignature: response.razorpay_signature,
-						});
+						},{ headers: {"Authorization" : `Bearer ${token}`}});
 						alert(result.data.msg);
-						fetchOrders();
+						if(result.data.rd===true){
+						deletecart(cartid);
+						history.push('/myorders');
+						}
 					},
 					prefill: {
 						name: 'example name',
 						email: 'email@example.com',
-						contact: '111',
+						contact: '1111',
 					},
 					notes: {
 						address: 'example address',
@@ -109,29 +130,7 @@ function PaymentApp() {
 				</button>
 				{loading && <div>Loading...</div>}
 			</div>
-			<div className="list-orders">
-				<h2>List Orders</h2>
-				<table class="table table-dark">
-					<thead>
-						<tr>
-							<th>ID</th>
-							<th>AMOUNT</th>
-							<th>ISPAID</th>
-							<th>RAZORPAY</th>
-						</tr>
-					</thead>
-					<tbody>
-						{orders.map((x) => (
-							<tr key={x._id}>
-								<td>{x._id}</td>
-								<td>{x.amount / 100}</td>
-								<td>{x.isPaid ? 'YES' : 'NO'}</td>
-								<td>{x.razorpay.paymentId}</td>
-							</tr>
-						))}
-					</tbody>
-				</table>
-			</div>
+
 		</div>
 		</Sidebar>
 	);
