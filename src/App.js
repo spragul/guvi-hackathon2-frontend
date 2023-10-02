@@ -64,7 +64,7 @@ function App() {
         <Route path="/resetpassword">
          <Reset/>
         </Route>
-        {MyRole==="admin" ? <Route path="/admin"><DarkExample/></Route> : ""}
+        <Route path="/admin"><DarkExample/></Route>
     </div>
   );
 }
