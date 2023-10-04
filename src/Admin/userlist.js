@@ -1,7 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react"
 import { mainurl } from "../App";
-import Sidebar from "../sidebar/sidebar";
+import { Loading } from "../pages/loading";
+
 
 
 export function UserList() {
@@ -21,25 +22,26 @@ export function UserList() {
     }
     useEffect(() => {
         getuser();
-    },[])
+    }, [])
     return (
-
-            <div className="order-container" style={{ height: "100vh" }}>
-                <div className="list-orders">
-                    <h2>User list</h2>
-                    <table class="table table-dark">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Mobile Number</th>
-                                <th>Role</th>
-                                <th>createdAt</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {role === 'admin' ?<>{ user.map((x) => (
+        <div>
+            {user ? <Loading /> : <div>
+                <div className="order-container" style={{ height: "100vh" }}>
+                    <div className="list-orders">
+                        <h2>User list</h2>
+                        <table class="table table-dark">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Mobile Number</th>
+                                    <th>Role</th>
+                                    <th>createdAt</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {role === 'admin' ? <>{user.map((x) => (
                                     <tr key={x._id}>
                                         <td>{x._id}</td>
                                         <td>{x.name}</td>
@@ -49,12 +51,15 @@ export function UserList() {
                                         <td>{x.createdAt}</td>
                                     </tr>
                                 ))
-                            }</> : <></>
-                            }
-                        </tbody>
-                    </table>
+                                }</> : <></>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-
+            }
+        </div>
     )
+
 }
