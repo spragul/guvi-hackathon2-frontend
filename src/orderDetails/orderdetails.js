@@ -37,7 +37,7 @@ export function OrderDetails() {
 
     return (
         <Sidebar>
-            {orderadmin || orders ? <Loading /> :
+            {(orderadmin.length===0 && orders.length === 0) ? <Loading /> :
                 <div className="order-container" style={{ height: "100vh" }}>
                     <div className="list-orders">
                         <h2>List Orders</h2>

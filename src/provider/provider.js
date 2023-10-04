@@ -8,7 +8,6 @@ const AppProvider = ({ children }) => {
     const [issuesdata, setIssueddata] = useState([]);
     
     const token=sessionStorage.getItem('token');
-    console.log(token);
     useEffect(() => {
         const getDetails = async () => {
             try {
@@ -16,7 +15,6 @@ const AppProvider = ({ children }) => {
                 const response = await fetch(`${mainurl}`,{ headers });
                 const data = await response.json();
                 const setdata =data.product
-                console.log(setdata);
                 setProductData(setdata)
             } catch (error) {
                 console.log(error);
@@ -33,7 +31,6 @@ const AppProvider = ({ children }) => {
                 const headers = { 'Authorization': `Bearer ${token}` };
                 const response = await fetch(`${mainurl}/cart/${id}`, { headers });
                 const data = await response.json();
-                 console.log(data);
                 let setdata=data.carts;
                 setIssueddata(setdata)
             } catch (error) {

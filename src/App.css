@@ -146,6 +146,16 @@ Book List*/
   height : 450px;
 
 }
+.cart-condinar{
+  height: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: #0dcaf042;
+  margin: 5px;
+  padding: 5px;
+  gap: 1rem;
+}
 .cart-card{
   background-color: rgb(245, 169, 239);
   border-radius : 10px;

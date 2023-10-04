@@ -13,13 +13,13 @@ export function RentalCart() {
     async function deletecart(id) {
         try {
             const response = await fetch(`${mainurl}/cart/delete/${id}`, {
-                method: "Delete"
-            },{ headers: {"Authorization" : `Bearer ${token}`}})
+                method: "Delete",
+             headers: {"Authorization" : `Bearer ${token}`}})
             const data = await response.json();
             console.log(data);
             const productAlterList = issuesdata.filter((bk) => bk._id !== id);
             setIssueddata(productAlterList)
-            toast("Delete item successful!")
+            toast(data.message);
         } catch (error) {
             console.log(error)
         }
@@ -27,8 +27,8 @@ export function RentalCart() {
     }
     return (
         <Sidebar>
-            <div style={{ height: '100vh',  backgroundColor: "#25bcff" }}>
-                <div className="book-condinar">
+            <div style={{   backgroundColor: "#25bcff" }}>
+                <div className="cart-condinar">
                     {issuesdata.map((productDatas, index) => (
                         <div key={index} className="cart-card">
                             <h3>{productDatas.productName}</h3>

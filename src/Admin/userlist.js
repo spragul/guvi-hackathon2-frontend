@@ -25,7 +25,7 @@ export function UserList() {
     }, [])
     return (
         <div>
-            {user ? <Loading /> : <div>
+            {user.length===0 ? <Loading /> : <div>
                 <div className="order-container" style={{ height: "100vh" }}>
                     <div className="list-orders">
                         <h2>User list</h2>
