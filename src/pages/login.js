@@ -105,7 +105,7 @@ export function Login() {
               <div>
                <p className="mb-0"><Link to="/forgotpassword"  style={{color:'white'}}>Forgot password?</Link></p>
                </div>
-                <span tyle={{color:'white'}}>Common Credentials</span>
+                <p tyle={{color:'white'}}>Common Credentials</p>
                 <p tyle={{color:'white'}}><span>email: user123@gmail.com </span>
                 <span tyle={{color:'white'}}>password: user1234 </span><p>
               <MDBBtn 
